@@ -26,45 +26,43 @@ for (var i = 0; i < title.length; i++){
 const card = document.querySelectorAll('.transport');
 
 card.forEach(function(card) {
-    card.onmousedown = function(e) {
+  card.onmousedown = function(e) {
 
-        var coords = getCoords(card);
-        var shiftX = e.pageX - coords.left;
-        var shiftY = e.pageY - coords.top;
-      
-        card.style.position = 'absolute';
-        document.body.appendChild(card);
+      var coords = getCoords(card);
+      var shiftX = e.pageX - coords.left;
+      var shiftY = e.pageY - coords.top;
+    
+      card.style.position = 'absolute';
+      document.body.appendChild(card);
+      moveAt(e);
+    
+      function moveAt(e) {
+        card.style.left = e.pageX - shiftX + 'px';
+        card.style.top = e.pageY - shiftY + 'px';
+      }
+    
+      document.onmousemove = function(e) {
         moveAt(e);
-      
-        card.style.zIndex = 1000; 
-      
-        function moveAt(e) {
-          card.style.left = e.pageX - shiftX + 'px';
-          card.style.top = e.pageY - shiftY + 'px';
-        }
-      
-        document.onmousemove = function(e) {
-          moveAt(e);
-        };
-      
-        card.onmouseup = function() {
-          document.onmousemove = null;
-          card.onmouseup = null;
-        };
-      
-      }
-      
-      card.ondragstart = function() {
-        return false;
       };
-      
-      function getCoords(elem) {  
-        var box = elem.getBoundingClientRect();
-        return {
-          top: box.top + pageYOffset,
-          left: box.left + pageXOffset
-        };
-      }
+    
+      card.onmouseup = function() {
+        document.onmousemove = null;
+        card.onmouseup = null;
+      };
+    
+    }
+    
+    card.ondragstart = function() {
+      return false;
+    };
+    
+    function getCoords(elem) {  
+      var box = elem.getBoundingClientRect();
+      return {
+        top: box.top + pageYOffset,
+        left: box.left + pageXOffset
+      };
+    }
 })
 
 
